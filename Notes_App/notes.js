@@ -1,8 +1,5 @@
-//challenge: Define and use a function in a new file
-
-/* const getNotes = function () {
-  return "your notes...";
+const getNotes = function () {
+  return "Your notes...";
 };
 
 module.exports = getNotes;
- */
