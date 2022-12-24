@@ -1,0 +1,18 @@
+{
+  "name": "section04",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^5.2.0",
+    "chlak": "^0.0.1-security",
+    "express": "^4.18.2",
+    "yargs": "^17.6.2"
+  }
+}
