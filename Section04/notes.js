@@ -25,7 +25,10 @@ const saveNotes = (notes) => {
 
 const loadNotes = () => {
   try {
-    return require("./notes.json");
+    const dataBuffer = fs.readFileSync("notes.json");
+    const dataJSON = dataBuffer.toString();
+    return JSON.parse(dataJSON);
+    // return require("./notes.json");
   } catch (e) {
     return [];
   }

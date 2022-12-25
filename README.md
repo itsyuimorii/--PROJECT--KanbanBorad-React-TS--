@@ -272,43 +272,53 @@ fs.writeFileSync("1-json.json", userJSON);
 > notes.js
 ```javascript
 
-const fs = require('fs')
-const getNotes = () => 'Your notes...'
+const fs = require('fs');
+const getNotes = () => 'Your notes...';
 
+//get the note saved to data store
 const addNote = (title, body) => {
-  const notes = loadNotes()
-  const duplicateNotes = notes.filter(note => note.title === title)
-
+  const notes = loadNotes();
+  //const duplicateNotes = notes.filter(note => note.title === title);
+	const dulicateNotes = notes.filter(function()=>{
+ 			return note.title === title
+	})
+	
   if (duplicateNotes.length === 0) {
     notes.push({
         title: title,
-        body: body
-    })
-    saveNotes(notes)
-    console.log('New note added!')
+        body: body,
+    });
+    saveNotes(notes);
+    console.log('New note added!');
   } else {
-    console.log('Note title taken!')
+    console.log('Note title taken!');
   }
-}
+};
 
 const saveNotes = notes => {
-  const dataJSON = JSON.stringify(notes, false, 2)
-  fs.writeFileSync('notes.json', dataJSON)
-}
+  const dataJSON = JSON.stringify(notes, false, 2);
+  //writing into file
+  fs.writeFileSync('notes.json', dataJSON);
+};
 
+//reusable function: load the existing notes, parse them and add something new onto the array, and save them back to the file system
 const loadNotes = () => {
   try {
-    return require('./notes.json')
+    const dataBuffer = fs.readFileSync("notes.json");
+    const dataJSON = dataBuffer.toString();
+    return JSON.parse(dataJSON);
+    //return require('./notes.json');
   } catch (e) {
-    return []
+    return [];
   }
-}
-
+};
+//exports two objects with each properities
 module.exports = {
   getNotes: getNotes,
   addNote: addNote
-}
+};
 ```
+
 > app.js
 ```javascript
 const yargs = require("yargs");
