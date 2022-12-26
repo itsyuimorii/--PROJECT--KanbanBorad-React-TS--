@@ -375,9 +375,67 @@ console.log(yargs.argv);
 yargs.parse();
 ```
 
+### Removing Notes
 
+> Challenge: Setup command option and function
+> 1. setup the remove command to take a required  "--title" option 
+> 2. Create and export a removeNote function from notes.js
+> 3. Call removeNote in remove command handler
+> 4. Have removeNote log the title of the note to be removed
+> 5. Test your work using : nodeapp.js remove --title="some title"
+>
 
+```javascript
+// app.js
+const yargs = require('yargs')
+const notes = require('./notes.js')
+...
+// Create remove command
+yargs.command({
+  command: "remove",
+  describe: "Remove a note",
+  builder:{
+      describe: "Note title",
+      demandOption: true,
+      type: "string",
+  	
+  }
+  handler: function () {
+    console.log("Removing the note");
+  },
+});
+```
 
+> Wire up removeNote
+> 1. Locad existing nores
+> 2. use array filter mehtod to remove the matching note(if any)
+> 3. save the newly created array
+> 4. test your work with a title that exists and a title that doesn`t exist
+
+```javascript
+//notes.js
+const chalk = require('chalk');
+
+const removeNote = (title) => {
+  const notes = loadNotes();
+  const noteToKeep = notes.filter(function (note) {
+    return note.title !== title;
+  });
+  if (notes.length > notesToKeep.length) {
+    console.log(chalk.green.inverse("Note removed!"));
+    saveNotes(notesToKeep);
+  } else {
+    console.log(chalk.red.inverse("No note found!"));
+  }
+};
+
+module.exports = {
+  getNotes: getNotes,
+  addNote: addNote,
+  removeNote: removeNote,
+};
+
+```
 
 
 
