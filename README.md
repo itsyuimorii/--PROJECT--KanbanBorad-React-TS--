@@ -119,6 +119,33 @@ node app.js add
 
 ### Argument Parsing with Yargs 👇
 
+> The purpose is to set up yargs to handle the commands we need to execute, such as adding, deleting, reading and listing comments.
+
+> We first need a command name an optional description, and a handler function, that at the moment we go to just to log to the console a test string. 
+> ```javascript
+> handler: function(argv) {      
+>   console.log('Add note', argv)}
+> ```
+
+> The builder properties, which the value is an object {}
+>```javascript
+>builder: {
+>      title:{
+>           describe: "Note title"
+>            }
+>}
+>```
+
+> Inside the builder our first option is “title” which has another object as value with the describe property inside. Now in the handler function we need to pass an argument, which will call argv:
+> ```javascript
+> handler: function(argv) {
+>   console.log('Add note', argv)
+> }
+> ```
+
+
+
+
 ```javascript
 const yargs = require('yargs')
 
@@ -171,13 +198,18 @@ yargs.command({
   }
 })
 
-module.exports = yargs 
+yargs.parse()
 ```
 
 ```javascript
 const yargs = require('./yargs')
 console.log(yargs.argv)
 yargs.parse()
+```
+
+
+```console
+node app.js --help
 ```
 
 ```console
@@ -248,7 +280,7 @@ console.log(data.title);
 ```
 
 >Work with JSON and the file system
-> 1. load and parse the JSON Data, data
+> 1. load and parse the JSON Data, 
 > 2. change the name and age property using your info
 >  3. Stringify the changed object and overwrite the original data
 > 4. test your work by viewing data in the JSON file
@@ -407,7 +439,7 @@ yargs.command({
 ```
 
 > Wire up removeNote
-> 1. Locad existing nores
+> 1. Load existing nores
 > 2. use array filter mehtod to remove the matching note(if any)
 > 3. save the newly created array
 > 4. test your work with a title that exists and a title that doesn`t exist
@@ -437,7 +469,49 @@ module.exports = {
 
 ```
 
+**[⬆ back to top](#table-of-contents)**
 
+### ES6 Aside: Arrow Functions
+
+```javascript
+const event = {
+  name: 'Birthday Party',
+  guestList: ['Andrew', 'Jen', 'Mike'],
+  printGuestList() {
+    console.log('Guest list for ' + this.name)
+    this.guestList.forEach((guest) => {
+      console.log(guest + ' is attending ' + this.name)
+    })
+  }
+}
+```
+
+```javascript
+// Goal: Create method to get incomplete tasks
+
+// 1. Define getTasksToDo method
+// 2. Use filter to to return just the incompleted tasks (arrow function)
+// 3. Test your work by running the script
+
+const tasks = {
+  tasks: [{
+    text: 'Grocery shopping',
+    completed: true
+  }, {
+    text: 'Clean yard',
+    completed: false
+  }, {
+    text: 'Film course',
+    completed: false
+  }],
+  getTasksToDo() {
+    return this.tasks.filter(task => task.completed === false)
+  }
+}
+tasks.getTasksToDo()
+```
+
+**[⬆ back to top](#table-of-contents)**
 
 
 
