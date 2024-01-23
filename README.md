@@ -56,3 +56,5 @@ npx vs npm 區別:
 - `npx tailwindcss init -p`：加上 `-p` 参数后，除了 `tailwind.config.js` 文件，还会创建 `postcss.config.js` 文件。PostCSS 是一个用于转换 CSS 的工具，而 Tailwind CSS 通常作为 PostCSS 的一个插件来使用。`postcss.config.js` 文件允许你配置 PostCSS 相关的选项，包括使用 Tailwind CSS 插件。
 
 因此，如果你打算在项目中使用 Tailwind CSS 并结合 PostCSS 工具链，使用 `-p` 参数是一个方便的方式来一次性生成这两个配置文件。
+
+- `npm install tailwind-merge` 安装 tailwind-merge 插件，用于合并 Tailwind CSS 配置文件。
