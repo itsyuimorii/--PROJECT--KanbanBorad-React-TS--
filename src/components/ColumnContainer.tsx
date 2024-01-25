@@ -1,13 +1,64 @@
-import { Column } from "../types";
+import { Column, Id } from "../types";
+import TransIcon from "../icons/TrashIcon";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import { useState } from "react";
 
 interface Props {
   column: Column;
+  deleteColumn: (id: Id) => void;
+  updateColumn: (id: Id, title: string) => void;
 }
 
 function ColumnContainer(props: Props) {
-  const { column } = props;
+  const { column, deleteColumn, updateColumn } = props;
+  const [editMode, setEditMode] = useState(false);
+
+  const {
+    setNodeRef,
+    attributes,
+    listeners,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({
+    id: column.id,
+    data: {
+      type: "Column",
+      column,
+    },
+  });
+
+  const style = {
+    transition,
+    transform: CSS.Transform.toString(transform),
+  };
+
+  if (isDragging) {
+    return (
+      <div
+        ref={setNodeRef}
+        style={style}
+        className="
+      bg-columnBackgroundColor
+      opacity-40
+      border-2
+      border-pink-500
+      w-[350px]
+      h-[500px]
+      max-h-[500px]
+      rounded-md
+      flex
+      flex-col
+      "
+      ></div>
+    );
+  }
+
   return (
     <div
+      ref={setNodeRef}
+      style={style}
       className="
       bg-columnBackgroundColor
       w-[350px] 
@@ -19,6 +70,11 @@ function ColumnContainer(props: Props) {
     >
       {/* Column title */}
       <div
+        {...attributes}
+        {...listeners}
+        onClick={() => {
+          setEditMode(true);
+        }}
         className="
       bg-mainBackgroundColor
       text-md
@@ -49,9 +105,31 @@ function ColumnContainer(props: Props) {
           >
             0
           </div>
-          {column.title}
+          {!editMode && column.title}
+          {editMode && (
+            <input
+              className="bg-black focus:border-rose-500 border rounded outline-none px-2"
+              value={column.title}
+              onChange={(e) => updateColumn(column.id, e.target.value)}
+              autoFocus
+              onBlur={() => {
+                setEditMode(false);
+              }}
+              onKeyDown={(e) => {
+                if (e.key !== "Enter") return;
+                setEditMode(false);
+              }}
+            />
+          )}
         </div>
-        <button>Delete</button>
+        <button
+          onClick={() => {
+            deleteColumn(column.id);
+          }}
+          className="stroke-gray-500 hover:stroke-white hover:bg-columnBackgroundColor rounded px-1 py-2"
+        >
+          <TransIcon />
+        </button>
       </div>
       {/* Column content */}
       <div className="flex flex-grow"> Content</div>
