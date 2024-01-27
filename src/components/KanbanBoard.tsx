@@ -52,14 +52,14 @@ function KanbanBoard() {
           <SortableContext items={columnId}>
             <div className="flex gap-4">
               {columns.map((column) => (
-                <div>
-                  <ColumnContainer
-                    key={column.id}
-                    column={column}
-                    deleteColumn={deleteColumn}
-                    updateColumn={updateColumn}
-                  />
-                </div>
+                <ColumnContainer
+                  key={column.id}
+                  column={column}
+                  deleteColumn={deleteColumn}
+                  updateColumn={updateColumn}
+                  createTask={createTask}
+                  tasks={tasks.filter((task) => task.columnId === column.id)}
+                />
               ))}
             </div>{" "}
           </SortableContext>
@@ -94,6 +94,7 @@ function KanbanBoard() {
                 column={activeColumn}
                 deleteColumn={deleteColumn}
                 updateColumn={updateColumn}
+                createTask={createTask}
               />
             )}
           </DragOverlay>,
@@ -102,6 +103,16 @@ function KanbanBoard() {
       </DndContext>
     </div>
   );
+
+  function createTask(columnId: Id) {
+    const newTask: Task = {
+      id: generateId(),
+      columnId,
+      content: `Task ${tasks.length + 1}`,
+    };
+
+    setTasks([...tasks, newTask]);
+  }
 
   function updateColumn(id: Id, title: string) {
     const newColumns = columns.map((col) => {

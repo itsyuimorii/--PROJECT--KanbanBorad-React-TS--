@@ -1,4 +1,4 @@
-import { Column, Id } from "../types";
+import { Column, Id, Task } from "../types";
 import TransIcon from "../icons/TrashIcon";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
@@ -9,10 +9,12 @@ interface Props {
   column: Column;
   deleteColumn: (id: Id) => void;
   updateColumn: (id: Id, title: string) => void;
+  createTask: (columnId: Id) => void;
+  tasks: Task[];
 }
 
 function ColumnContainer(props: Props) {
-  const { column, deleteColumn, updateColumn } = props;
+  const { column, deleteColumn, updateColumn, createTask, tasks } = props;
   const [editMode, setEditMode] = useState(false);
 
   const {
@@ -136,7 +138,12 @@ function ColumnContainer(props: Props) {
       {/* Column content */}
       <div className="flex flex-grow"> Content</div>
       {/* Column footer */}
-      <button className="flex gap-2 items-center border-columnBackgroundColor border-2 rounded-md p-4 hvoer:text-rose-500 active">
+      <button
+        className="flex gap-2 items-center border-columnBackgroundColor border-2 rounded-md p-4 border-x-columnBackgroundColor hover:bg-mainBackgroundColor hover:text-rose-500 active:bg-black"
+        onClick={() => {
+          createTask(column.id);
+        }}
+      >
         <PlusIcon />
         Add task
       </button>
