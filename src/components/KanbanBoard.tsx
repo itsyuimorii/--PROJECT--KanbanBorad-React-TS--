@@ -18,6 +18,7 @@ function KanbanBoard() {
   const [columns, setColumns] = useState<Column[]>([]);
   const columnId = useMemo(() => columns.map((column) => column.id), [columns]);
   const [activeColumn, setActiveColumn] = useState<Column | null>(null);
+  //detached delete button from column container
   const sensor = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -138,9 +139,7 @@ function KanbanBoard() {
 
     setColumns((columns) => {
       const activeColumnIndex = columns.findIndex((col) => col.id === activeId);
-
       const overColumnIndex = columns.findIndex((col) => col.id === overId);
-
       return arrayMove(columns, activeColumnIndex, overColumnIndex);
     });
   }
