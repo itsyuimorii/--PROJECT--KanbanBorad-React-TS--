@@ -3,6 +3,7 @@ import TransIcon from "../icons/TrashIcon";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useState } from "react";
+import PlusIcon from "../icons/PlusIcon";
 
 interface Props {
   column: Column;
@@ -27,6 +28,7 @@ function ColumnContainer(props: Props) {
       type: "Column",
       column,
     },
+    disabled: editMode,
   });
 
   const style = {
@@ -134,7 +136,10 @@ function ColumnContainer(props: Props) {
       {/* Column content */}
       <div className="flex flex-grow"> Content</div>
       {/* Column footer */}
-      <div>footer</div>
+      <button className="flex gap-2 items-center border-columnBackgroundColor border-2 rounded-md p-4 hvoer:text-rose-500 active">
+        <PlusIcon />
+        Add task
+      </button>
     </div>
   );
 }

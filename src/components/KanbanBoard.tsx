@@ -1,7 +1,8 @@
 import { useMemo, useState } from "react";
 import PlusIcon from "../icons/PlusIcon";
-import { Column, Id } from "../types";
+import { Column, Id, Task } from "../types";
 import ColumnContainer from "./ColumnContainer";
+
 import {
   DndContext,
   DragOverlay,
@@ -17,6 +18,9 @@ import { createPortal } from "react-dom";
 function KanbanBoard() {
   const [columns, setColumns] = useState<Column[]>([]);
   const columnId = useMemo(() => columns.map((column) => column.id), [columns]);
+
+  const [tasks, setTasks] = useState<Task[]>([]);
+
   const [activeColumn, setActiveColumn] = useState<Column | null>(null);
   //detached delete button from column container
   const sensor = useSensors(
@@ -100,10 +104,12 @@ function KanbanBoard() {
   );
 
   function updateColumn(id: Id, title: string) {
-    const newColumn = columns.map((col) => {
-      if (col.id !== id) return col;
-      return { ...col, title };
+    const newColumns = columns.map((col) => {
+      if (col.id !== id) return col; //if the column id is not the same as the id passed in, return the same column
+      return { ...col, title }; //return a new column with the same id and new title
     });
+
+    setColumns(newColumns);
   }
 
   function deleteColumn(id: Id) {
